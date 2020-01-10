@@ -179,11 +179,11 @@ def _confidence(coef, cnstit, opt, t, e, tin, elor, xraw, xmod, W, m, B,
                      np.dot(xmod.conj(), _Wx)) / (nt-nm)
 
     # Gamma_C: covariance Eq. 54.
-    gamC = np.linalg.inv(np.dot(B.conj().T, _WB)) * varMSM
+    gamC = np.linalg.solve(np.dot(B.conj().T, _WB), varMSM)
 
     # Gamma_P: pseudo-covariance Eq. 54.
-    gamP = np.linalg.inv(np.dot(B.T, _WB))
-    gamP *= (np.dot(xraw, _Wx) - np.dot(xmod, _Wx)) / (nt - nm)
+    gamP = np.linalg.solve(np.dot(B.T, _WB), 
+                         ((np.dot(xraw, _Wx) - np.dot(xmod, _Wx)) / (nt - nm)))
 
     del _Wx, _WB
 
